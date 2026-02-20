@@ -1,4 +1,4 @@
-expressBookReviews/final_project$ curlcurl http://localhost:5000/
+curl http://localhost:5000/
 theia@theia-harikalyanb:/home/project/expressBookReviews/final_project$ curl http://localhost:5000/
 {
     "1": {
