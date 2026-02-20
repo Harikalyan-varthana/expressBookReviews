@@ -1,4 +1,4 @@
-curl -X POST http://localhost:50
+curl -X POST http://localhost:5000/customer/login \
 -H "Content-Type: application/json" \
 -c cookies.txt \
 -d '{"username":"john","password":"1234"}'
