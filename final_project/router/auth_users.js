@@ -1,3 +1,4 @@
+
 const express = require('express');
 const jwt = require('jsonwebtoken');
 let books = require("./booksdb.js");
@@ -44,32 +45,52 @@ regd_users.post("/login", (req,res) => {
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
-   const isbn = req.params.isbn;
-  let review = req.query.review;
-  let username = req.session.authorization['username'];
-  if (books[isbn]) {
-    let book = books[isbn];
-    book.reviews[username] = review;
-    return res.status(200).send(`The review for the book with ISBN ${isbn} has been added/updated.`);
-  }
-  else {
-    return res.status(404).json({ message: `Book with ISBN ${isbn} not found` });
-  }
-});
+    const isbn = req.params.isbn;
+    const review = req.body.review;
+  
+    if (!req.session || !req.session.authorization) {
+      return res.status(403).json({ message: "User not logged in" });
+    }
+  
+    const username = req.session.authorization.username;
+  
+    if (books[isbn]) {
+      books[isbn].reviews[username] = review;
+  
+      return res.status(200).json({
+        message: "Review added/updated successfully",
+        reviews: books[isbn].reviews
+      });
+    } else {
+      return res.status(404).json({
+        message: `Book with ISBN ${isbn} not found`
+      });
+    }
+  });
 
 // Delete a book review
 regd_users.delete("/auth/review/:isbn", (req, res) => {
-  const isbn = req.params.isbn;
-  let username = req.session.authorization['username'];
-  if (books[isbn]) {
-    let book = books[isbn];
-    delete book.reviews[username];
-    return res.status(200).send(`Reviews for the ISBN ${isbn} posted by the user ${username} deleted.`);
-  }
-  else {
-    return res.status(404).json({ message: `Book with ISBN ${isbn} not found` });
-  }
-});
+    const isbn = req.params.isbn;
+  
+    if (!req.session || !req.session.authorization) {
+      return res.status(403).json({ message: "User not logged in" });
+    }
+  
+    const username = req.session.authorization.username;
+  
+    if (books[isbn]) {
+      delete books[isbn].reviews[username];
+  
+      return res.status(200).json({
+        message: "Review deleted successfully",
+        reviews: books[isbn].reviews
+      });
+    } else {
+      return res.status(404).json({
+        message: `Book with ISBN ${isbn} not found`
+      });
+    }
+  });
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
