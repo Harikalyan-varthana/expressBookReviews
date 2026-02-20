@@ -44,7 +44,7 @@ regd_users.post("/login", (req,res) => {
 });
 
 // Add a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
+regd_users.put("/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
     const review = req.body.review;
   
@@ -61,6 +61,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
         message: "Review added/updated successfully",
         reviews: books[isbn].reviews
       });
+      
     } else {
       return res.status(404).json({
         message: `Book with ISBN ${isbn} not found`
@@ -69,7 +70,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   });
 
 // Delete a book review
-regd_users.delete("/auth/review/:isbn", (req, res) => {
+regd_users.delete("/review/:isbn", (req, res) => {
     const isbn = req.params.isbn;
   
     if (!req.session || !req.session.authorization) {
