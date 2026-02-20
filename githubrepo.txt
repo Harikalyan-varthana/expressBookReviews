@@ -1,3 +1,2 @@
 curl -s https://api.github.com/repos/Harikalyan-varthana/expressBookReviews | jq '.parent.full_name'
 "ibm-developer-skills-network/expressBookReviews"
-theia@theia-harikalyanb:/home/project/expressBookReviews$ 
