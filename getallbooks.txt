@@ -1,5 +1,4 @@
 curl http://localhost:5000/
-theia@theia-harikalyanb:/home/project/expressBookReviews/final_project$ curl http://localhost:5000/
 {
     "1": {
         "author": "Chinua Achebe",
